@@ -2,9 +2,9 @@
 <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
 
 <div class="card">
-  <header>Login</header>
+  <header>Sign Up</header>
 
-  <%= form_with url: session_path do |form| %>
+  <%= form_with url: user_registration_path do |form| %>
     <div class="field">
       <%= form.label :username %>
       <%= form.text_field :username, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your username", value: params[:username] %>
@@ -15,7 +15,7 @@
       <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %>
     </div>
 
-    <%= form.button "Login", class: "btn" %>
-    <%= link_to "Sign up", new_user_registration_path %>
+    <%= form.button "Sign up", class: "btn" %>
+    <%= link_to "Login", new_session_path %>
   <% end %>
 </div>
