@@ -23,6 +23,28 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <h1><a href="/">Booklog</a></h1>
+      <nav>
+        <ul>
+          <% if Current.user %>
+            <li><a href="{{NewBookPath .bva.PathUser.Username}}">New Book</a></li>
+            <li><a href="{{ImportBookCSVFormPath .bva.PathUser.Username}}">Import</a></li>
+            <li><a href="{{ExportBookCSVPath .bva.PathUser.Username}}">Export</a></li>
+            <li>
+              <form action="{{LogoutPath}}" method="POST" class="link">
+                {{.bva.CSRFField}}
+                <button class="link">Logout</button>
+              </form>
+            </li>
+          <% else %>
+            <li><a href="{{NewLoginPath}}">Login</a></li>
+          <% end %>
+        </ul>
+      </nav>
+    </header>
+    <div class="content">
+      <%= yield %>
+    </div>
   </body>
 </html>
