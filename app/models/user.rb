@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
+  has_many :books, dependent: :destroy
 
   normalizes :username, with: -> { _1.strip.presence }
   validates :username,

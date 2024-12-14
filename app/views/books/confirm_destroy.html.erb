@@ -1,0 +1,22 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="card">
+  <h2>Confirm you want to delete this book?</h2>
+  <dl>
+    <dt>Title</dt>
+    <dd><%= @book.title %></dd>
+    <dt>Author</dt>
+    <dd><%= @book.author %></dd>
+    <dt>Finish Date</dt>
+    <dd><%= @book.finish_date.strftime(" %B %e, %Y") %></dd>
+    <dt>Format</dt>
+    <dd><%= @book.format %></dd>
+    <% if @book.location %>
+      <dd><%= @book.location %></dd>
+    <% else %>
+      <dd class="empty">None</dd>
+    <% end %>
+  </dl>
+
+  <%= button_to "Delete", book_path(@book), method: :delete, class: "btn" %>
+</div>

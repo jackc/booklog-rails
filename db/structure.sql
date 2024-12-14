@@ -41,6 +41,23 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: books; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.books (
+    id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    title text NOT NULL,
+    author text NOT NULL,
+    finish_date date NOT NULL,
+    format text NOT NULL,
+    location text,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL
+);
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -84,6 +101,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: books books_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.books
+    ADD CONSTRAINT books_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -108,6 +133,13 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: books_user_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX books_user_id_idx ON public.books USING btree (user_id);
+
+
+--
 -- Name: sessions_user_id_idx; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -119,6 +151,14 @@ CREATE INDEX sessions_user_id_idx ON public.sessions USING btree (user_id);
 --
 
 CREATE UNIQUE INDEX users_username_idx ON public.users USING btree (username);
+
+
+--
+-- Name: books books_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.books
+    ADD CONSTRAINT books_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -136,6 +176,7 @@ ALTER TABLE ONLY public.sessions
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241203224716'),
 ('20241203182442'),
 ('20241203182441');
 

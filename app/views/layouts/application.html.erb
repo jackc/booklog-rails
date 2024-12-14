@@ -28,15 +28,10 @@
       <nav>
         <ul>
           <% if Current.user %>
-            <li><a href="{{NewBookPath .bva.PathUser.Username}}">New Book</a></li>
-            <li><a href="{{ImportBookCSVFormPath .bva.PathUser.Username}}">Import</a></li>
-            <li><a href="{{ExportBookCSVPath .bva.PathUser.Username}}">Export</a></li>
-            <li>
-              <form action="{{LogoutPath}}" method="POST" class="link">
-                {{.bva.CSRFField}}
-                <button class="link">Logout</button>
-              </form>
-            </li>
+            <li><%= link_to "New Book", new_book_path %></li>
+            <li><%= link_to "Import", import_csv_form_books_path %></li>
+            <li><%= link_to "Export", export_csv_books_path %></li>
+            <li><%= link_to "Logout", session_path, data: { turbo_method: :delete } %></li>
           <% else %>
             <li><a href="{{NewLoginPath}}">Login</a></li>
           <% end %>

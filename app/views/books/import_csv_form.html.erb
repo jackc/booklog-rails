@@ -1,0 +1,17 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="card">
+  <header>Import Book CSV</header>
+
+  <p>CSV must include header row.</p>
+  <p>CSV must include 5 columns in order: title, author, date finished, format, and location.</p>
+
+  <%= form_with url: import_csv_books_path, method: :post do |f| %>
+    <div class="field">
+      <%= f.label :csv, "CSV" %>
+      <%= f.file_field :csv %>
+    </div>
+
+    <%= f.submit "Import" %>
+  <% end %>
+</div>

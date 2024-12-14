@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  resources :books do
+    collection do
+      get :import_csv_form
+      post :import_csv
+      get :export_csv
+    end
+
+    member do
+      get :confirm_destroy
+    end
+  end
   resource :session
   resource :user_registration
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -12,5 +23,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "rails/health#show"
+  root "books#index"
 end

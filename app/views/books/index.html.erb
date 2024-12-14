@@ -1,0 +1,166 @@
+<% content_for :head do %>
+  <style>
+    ol.years {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    ol.years > li {
+      margin-bottom: 2rem;
+    }
+
+    ol.years > li > h2 {
+      font-size: 2rem;
+      color: var(--light-text-color);
+    }
+
+    ol.books {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    ol.books > li {
+      margin: 1rem 0;
+      display: grid;
+    }
+
+    ol.books time.finished, ol.books .format, ol.books .author {
+      color: var(--light-text-color);
+    }
+
+    ol.books > li .title {
+      display: block;
+      font-weight: bold;
+    }
+
+    .stats {
+      display: grid;
+    }
+
+    .books-per-time h2 {
+      margin: 0 0 1rem 0;
+    }
+
+    .books-per-time table {
+      border-collapse: collapse;
+    }
+
+    .books-per-time th {
+      font-weight: bold;
+      color: var(--light-text-color);
+      padding: 2px 0;
+      text-align: left;
+      min-width: 6rem;
+    }
+
+    .books-per-time td {
+      color: var(--light-text-color);
+      text-align: right;
+      padding: 2px 0;
+    }
+
+    @media (max-width: 32rem) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      ol.years > li > h2 {
+        margin: 0;
+      }
+
+      ol.books > li > .what {
+        margin-left: 2rem;
+      }
+    }
+
+    @media not all and (max-width: 32rem) {
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      ol.books > li {
+        display: grid;
+        grid-template-columns: auto 1fr;
+      }
+
+      ol.years > li > h2 {
+        margin: 0 0 0 9rem;
+      }
+
+      ol.books time.finished, ol.books .format {
+        display: block;
+        min-width: 8rem;
+        text-align: right;
+        margin-right: 1rem;
+      }
+    }
+  </style>
+<% end %>
+
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Books" %>
+
+<div class="stats">
+  <div class="card books-per-time">
+    <h2>Per Year</h2>
+
+    <table>
+      <% @books_by_year.each do |year, books| %>
+        <tr>
+          <th><%= year %></th>
+          <td><%= books.size %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <div class="card books-per-time">
+    <h2>Last Year Per Month</h2>
+
+    <table>
+      <% @books_per_month_for_last_year.each do |month, count| %>
+        <tr>
+          <th><%= month.strftime("%A") %></th>
+          <td><%= count %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <% @books_by_year.each do |year, books| %>
+    <ol class="years">
+      <li>
+        <h2><%= year %></h2>
+        <ol class="books">
+          <% books.each do |book| %>
+            <%= tag.li id: dom_id(book) do %>
+              <div class="when-and-how">
+                <%= tag.time class: "finished", datetime: book.finish_date.strftime("%Y-%m-%d"), title: book.finish_date.strftime("%B %e, %Y") do %>
+                  <%= book.finish_date.strftime("%B %e") %>
+                <% end %>
+                <span class="format">
+                  <% if book.format == "audio" %>
+                    🎧
+                  <% elsif book.format == "text" %>
+                    📖
+                  <% elsif book.format == "video" %>
+                    📺
+                  <% end %>
+                </span>
+              </div>
+              <div class="what">
+                <%= link_to book.title, book_path(book), class: "title" %>
+                <div class="author"><%= book.author %></div>
+              </div>
+            <% end %>
+          <% end %>
+        </ol>
+      </li>
+    </ol>
+  <% end %>
+</div>

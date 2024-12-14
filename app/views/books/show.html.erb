@@ -1,0 +1,23 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="card">
+  <dl>
+    <dt>Title</dt>
+    <dd><%= @book.title %></dd>
+    <dt>Author</dt>
+    <dd><%= @book.author %></dd>
+    <dt>Finish Date</dt>
+    <dd><%= @book.finish_date.strftime(" %B %e, %Y") %></dd>
+    <dt>Format</dt>
+    <dd><%= @book.format %></dd>
+    <dt>Location</dt>
+    <% if @book.location %>
+      <dd><%= @book.location %></dd>
+    <% else %>
+      <dd class="empty">None</dd>
+    <% end %>
+  </dl>
+
+  <%= link_to "Edit", edit_book_path(@book), class: "title" %>
+  <%= link_to "Delete", confirm_destroy_book_path(@book), class: "title" %>
+</div>
